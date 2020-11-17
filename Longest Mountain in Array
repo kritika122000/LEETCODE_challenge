@@ -1,0 +1,24 @@
+class Solution {
+public:
+    int longestMountain(vector<int>& A) {
+        int result = 0;
+        int lower_tail, upper_tail;
+        
+        for(int i = 0 ; i < A.size();){
+            lower_tail = upper_tail = 0;
+            while(i + 1 < A.size() && A[i] < A[i + 1]){
+                upper_tail++;
+                i++;
+            }
+             while(upper_tail > 0 && i + 1 < A.size() && A[i] > A[i + 1]){
+                lower_tail++;
+                i++;
+            }
+            if(lower_tail > 0 && upper_tail > 0)
+                result = max(result, lower_tail + upper_tail + 1);
+            else if(lower_tail == 0)
+                i++;
+        }
+        return result;
+    }
+    };
