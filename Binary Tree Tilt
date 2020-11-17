@@ -1,0 +1,41 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    int sum=0;
+    vector<int> tilts;
+    int sums(TreeNode *root)
+    {
+        if(root==NULL)
+            return 0;
+        return sums(root->left)+sums(root->right)+root->val;
+    }
+    void tilt(TreeNode *root)
+    {
+        if(root==NULL)
+            return ;
+        int x=abs(sums(root->left)-sums(root->right));
+        //cout<<x<<"\n";
+        tilts.push_back(x);
+        tilt(root->left);
+        tilt(root->right);
+        
+            
+        
+    }
+    int findTilt(TreeNode* root) {
+        tilt(root);
+        for(int i:tilts)
+            sum+=i;
+        return sum;
+    }
+};
