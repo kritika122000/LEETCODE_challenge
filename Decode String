@@ -1,0 +1,34 @@
+class Solution {
+public:
+    string decodeString(string s) {
+        
+        stack<pair<int, int>> kstack; 
+        string res = "";
+        int i = 0;                   
+        while(i < s.size()) {
+            if(isalpha(s[i])) {
+                res.push_back(s[i]);
+            } 
+            else if(isdigit(s[i])) {
+                int count = s[i] - '0';
+                while(isdigit(s[++i])) {
+                    count *= 10;
+                    count += s[i] - '0';
+                }
+                kstack.push({res.size(), count});
+            }
+            else if(s[i] == ']') {
+                pair<int, int> lastRepeat = kstack.top();
+                kstack.pop();
+                int start = lastRepeat.first;
+                int count = lastRepeat.second;
+                int len = res.size() - start;
+                while(count-- > 1) {
+                    res += res.substr(start, len);
+                }
+            }
+            i++;
+        }
+        return res;
+    }
+};
