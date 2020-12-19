@@ -1,0 +1,16 @@
+class Solution {
+public:
+    int kthFactor(int n, int k) {
+        int ans;
+        int i=0,m=1;
+        while(i<k && m<=n){
+            if(n%m==0){
+                i++;
+            }
+            m++;
+        }
+        if(i==k)
+            return m-1;
+        return -1;
+    }
+};
