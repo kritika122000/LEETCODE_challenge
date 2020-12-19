@@ -1,0 +1,25 @@
+class Solution {
+public:
+        int dp[80][80][80];
+int find(vector<vector<int>> &grid, int i, int j, int k, int n, int m)
+{
+	if(j<0 || k<0 || j==m || k==m || j==k || i==n) return 0;
+	int res = 0;
+	if(dp[i][j][k]!=-1) return dp[i][j][k];
+	for(int x=-1;x<=1;x++)
+		for(int y=-1;y<=1;y++)
+		{
+			res = max(res,find(grid,i+1,j+x,k+y,n,m));
+		}
+	return dp[i][j][k] = res + grid[i][j] + grid[i][k];
+}
+int cherryPickup(vector<vector<int>>& grid) {
+	int n = grid.size(), m = grid[0].size();
+	for(int i=0;i<n;i++)
+		for(int j=0;j<m;j++)
+			for(int k=0;k<m;k++)
+				dp[i][j][k] = -1;
+	return find(grid,0,0,m-1,n,m);
+}
+    
+};
